@@ -23,7 +23,7 @@
 /* USER CODE BEGIN PD */
 #define FS_HZ   (10000.0f)   // sampling frequency = 10kHz
 #define TS_SEC  (1.0f/FS_HZ)
-#define FC_HZ   (100.0f)     // 1st LPF cutoff = 100Hz (실험실용 고정)
+#define FC_HZ   (100.0f)     // 1st LPF cutoff = 100Hz
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -280,7 +280,7 @@ int main(void)
   }
 }
 
-/* --- SystemClock_Config() 그대로 (생략 없이 유지) --- */
+/* --- SystemClock_Config() --- */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -310,7 +310,7 @@ void SystemClock_Config(void)
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK) { Error_Handler(); }
 }
 
-/* --- MX_ADC1_Init() 그대로 유지 (선생님 코드 기반) --- */
+/* --- MX_ADC1_Init() --- */
 static void MX_ADC1_Init(void)
 {
   ADC_MultiModeTypeDef multimode = {0};
@@ -346,7 +346,7 @@ static void MX_ADC1_Init(void)
   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) { Error_Handler(); }
 }
 
-/* --- MX_DAC1_Init() 그대로 유지 (OUT2=PA5, CH2) --- */
+/* --- MX_DAC1_Init()  OUT2=PA5, CH2) --- */
 static void MX_DAC1_Init(void)
 {
   DAC_ChannelConfTypeDef sConfig = {0};
@@ -512,3 +512,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   (void)line;
 }
 #endif /* USE_FULL_ASSERT */
+
