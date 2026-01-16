@@ -34,11 +34,6 @@
 /* ===== 메트로놈 설정 ===== */
 #define BPM_MIN        40
 #define BPM_MAX        208
-
-/* 7-seg 극성: 실제 7-seg 타입에 맞춰 바꾸세요.
-   - 공통캐소드: SEG_ACTIVE_LOW=0, DIGIT_ACTIVE_LOW=0 (보통)
-   - 공통애노드: SEG_ACTIVE_LOW=1, DIGIT_ACTIVE_LOW=1
-*/
 #define SEG_ACTIVE_LOW   0
 #define DIGIT_ACTIVE_LOW 1
 
@@ -208,7 +203,6 @@ static void SevenSeg_Scan1ms(void)
     default: digit_num = d3; break;
   }
 
-  /* 선행 0 숨김(원치 않으면 이 블럭을 지우세요) */
   uint8_t blank = 0;
   if (scan_digit==0 && d0==0) blank = 1;
   if (scan_digit==1 && d0==0 && d1==0) blank = 1;
@@ -316,8 +310,6 @@ int main(void)
   /* TIM6 1ms 인터럽트 시작 */
   HAL_TIM_Base_Start_IT(&htim6);
 
-  /* 만약 CubeMX에서 NVIC를 체크 안 했으면, 아래 두 줄이 도움이 됩니다.
-     (stm32g4xx_it.c에 TIM6_DAC_IRQHandler가 있어야 실제로 인터럽트가 들어옵니다.) */
   HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
 
@@ -586,3 +578,4 @@ void assert_failed(uint8_t *file, uint32_t line)
 {
 }
 #endif /* USE_FULL_ASSERT */
+
