@@ -34,12 +34,12 @@
 /* USER CODE BEGIN PD */
 
 /* -------------------- LCD (I2C1) Settings -------------------- */
-#define LCD_ADDR_7BIT   (0x3C)     // ✅ I2C scan에서 확인된 주소
+#define LCD_ADDR_7BIT   (0x3C)     // I2C scan에서 확인된 주소
 #define LCD_CTRL_CMD    (0x00)     // control byte for command
 #define LCD_CTRL_DATA   (0x40)     // control byte for data
 
 /* -------------------- I2C3 Slave RX Settings -------------------- */
-#define I2C_SLAVE_OWN_ADDR_7BIT    (0x12)   // ✅ G474RE가 보내는 목적지 주소(7-bit)
+#define I2C_SLAVE_OWN_ADDR_7BIT    (0x12)   // G474RE가 보내는 목적지 주소(7-bit)
 #define RX_LEN                     (1)
 
 /* 최신 입력 표시 문구 */
@@ -197,7 +197,6 @@ static void I2C3_StartSlaveRx_IT(void)
   (void)HAL_I2C_Slave_Receive_IT(&hi2c3, &g_rx, RX_LEN);
 }
 
-/* (선택) Listen 완료 콜백: F4에서 Listen 모드 재활성화용 */
 void HAL_I2C_ListenCpltCallback(I2C_HandleTypeDef *hi2c)
 {
   if (hi2c->Instance == I2C3)
@@ -225,7 +224,7 @@ void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)
     uint32_t err = HAL_I2C_GetError(&hi2c3);
     printf("[I2C3 ERROR] err=0x%08lX -> reset I2C3\r\n", (unsigned long)err);
 
-    // ✅ 고착 풀기: 주변장치 리셋
+    // 고착 풀기: 주변장치 리셋
     HAL_I2C_DeInit(&hi2c3);
     MX_I2C3_Init();
 
@@ -385,7 +384,6 @@ static void MX_I2C3_Init(void)
   hi2c3.Init.ClockSpeed = 100000;
   hi2c3.Init.DutyCycle = I2C_DUTYCYCLE_2;
 
-  // ✅ Slave는 OwnAddress1을 세팅해두는 게 안정적
   hi2c3.Init.OwnAddress1 = (uint16_t)(I2C_SLAVE_OWN_ADDR_7BIT << 1);
 
   hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
@@ -435,3 +433,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   (void)file; (void)line;
 }
 #endif /* USE_FULL_ASSERT */
+
