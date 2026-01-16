@@ -78,13 +78,6 @@ int _write(int file, char *ptr, int len)
   return len;
 }
 
-/*
-  [전기적 가정 - 현재 너의 GPIO 설정과 일치]
-  - COL: INPUT + PULLUP
-  - ROW: OUTPUT_PP
-  - 눌림: 활성 ROW를 LOW로 만들면 해당 COL이 LOW로 떨어짐
-  => pressed = (COL pin == LOW)
-*/
 
 static void Keypad_SetAllRowsHigh(void)
 {
@@ -312,10 +305,7 @@ static void MX_I2C2_Init(void)
   }
 }
 
-/**
-  * @brief USART2 Initialization Function
-  * @note  CubeMX에서 USART2를 Enable 해야 핀(AF) 설정도 자동으로 맞습니다.
-  */
+
 static void MX_USART2_UART_Init(void)
 {
   huart2.Instance = USART2;
@@ -346,7 +336,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  // ✅ ROW: 각각 포트/핀 기준으로 초기화 (하드코딩 제거)
+  // ROW: 각각 포트/핀 기준으로 초기화
   GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull  = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -369,7 +359,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(ROW3_GPIO_Port, ROW3_Pin, GPIO_PIN_SET);
   HAL_GPIO_WritePin(ROW4_GPIO_Port, ROW4_Pin, GPIO_PIN_SET);
 
-  // ✅ COL: 입력 Pull-up
+  // COL: 입력 Pull-up
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
 
@@ -403,3 +393,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   (void)line;
 }
 #endif /* USE_FULL_ASSERT */
+
