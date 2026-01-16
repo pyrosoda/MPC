@@ -85,7 +85,6 @@ static void all_off(void)
 
 static void apply_state(TrafficState s)
 {
-  // 안전하게: 항상 다 끄고 필요한 것만 켬
   all_off();
 
   switch (s)
@@ -373,3 +372,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
