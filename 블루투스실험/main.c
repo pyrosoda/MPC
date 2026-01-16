@@ -66,15 +66,6 @@ static void LCD_PutCharWrap(char c);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-/**
- * LCD I2C write helpers (Control byte 방식)
- *  - control 0x00: Command
- *  - control 0x40: Data
- *
- * Assumption:
- *  - LCD module already proven to work with [control][payload] 2-byte transfers.
- */
-
 static void LCD_SendCmd(uint8_t cmd)
 {
   uint8_t buf[2] = {0x00, cmd};
@@ -112,10 +103,6 @@ static void LCD_PutCharWrap(char c)
 
 static void LCD_Init_User(void)
 {
-  /**
-   * Minimal HD44780-compatible init (may vary by module).
-   * If you have a known-good init from your earlier success, replace this block.
-   */
 
   HAL_Delay(50);
 
@@ -133,10 +120,7 @@ static void LCD_Init_User(void)
 
 /* USER CODE END 0 */
 
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
+
 int main(void)
 {
 
@@ -402,3 +386,4 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
